@@ -32,6 +32,7 @@ namespace WebApplication.Site
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddAutoMapper(typeof(AutoMaperProfile));
             services.AddAutoMapper(typeof(WebApplication.Site.AppStart.AutoMaperProfile));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
 
@@ -50,6 +51,9 @@ namespace WebApplication.Site
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions {
+                    HotModuleReplacement = true,
+                });
             }
             else
             {
@@ -63,6 +67,9 @@ namespace WebApplication.Site
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapSpaFallbackRoute(
+                    name: "spa-fallback",
+                    defaults: new { controller = "Home", action = "Index" });
             });
 
             DBConfig.Config();
