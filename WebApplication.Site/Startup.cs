@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
 using WebApplication.Data.utils;
+using Microsoft.AspNetCore.SpaServices.Webpack;
 
 using WebApplication.Data;
 
@@ -33,7 +34,6 @@ namespace WebApplication.Site
         {
             services.AddMvc();
             services.AddAutoMapper(typeof(AutoMaperProfile));
-            services.AddAutoMapper(typeof(WebApplication.Site.AppStart.AutoMaperProfile));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
 
             ConfigurationRoot = AppConfigurationBuilder.GetBuilder();
