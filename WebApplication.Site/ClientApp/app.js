@@ -9,12 +9,12 @@ Vue.prototype.$http = axios
 // sync(store, router)
 
 const app = new Vue(Object.assign({
-    // store,
-    router,
+  // store,
+  router,
 }, App))
 
 export {
-    app,
-    router,
-    // store
+  app,
+  router,
+  // store
 }

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using AutoMapper;
 using WebApplication.Data.utils;
 using Microsoft.AspNetCore.SpaServices.Webpack;
+using Microsoft.Extensions.FileProviders;
 
 using WebApplication.Data;
 
@@ -53,6 +54,7 @@ namespace WebApplication.Site
                 app.UseDeveloperExceptionPage();
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions {
                     HotModuleReplacement = true,
+                    ConfigFile = "./build/webpack.dev.conf.js"
                 });
             }
             else
@@ -61,12 +63,18 @@ namespace WebApplication.Site
             }
 
             app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "dist")),
+                RequestPath = ""
+            });
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
                 routes.MapSpaFallbackRoute(
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });
