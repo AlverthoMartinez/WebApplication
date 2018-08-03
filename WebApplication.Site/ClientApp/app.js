@@ -18,3 +18,7 @@ export {
   router,
   // store
 }
+
+if (module && module.hot) {
+  module.hot.accept()
+}

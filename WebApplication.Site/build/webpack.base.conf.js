@@ -29,6 +29,7 @@ module.exports = {
   },
   module: {
     rules: [
+      { test: /\.js$/, exclude: /node_modules/, loader: 'eslint-loader', options: { } },
       {
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
@@ -48,7 +49,6 @@ module.exports = {
         loader: 'babel-loader',
         include: [resolve('src'), resolve('test')],
       },
-      { test: /\.js$/, exclude: /node_modules/, loader: 'eslint-loader', options: { } },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',

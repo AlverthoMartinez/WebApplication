@@ -6,11 +6,9 @@ const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 const loadMinified = require('./load-minified')
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -31,6 +29,9 @@ const webpackConfig = merge(baseWebpackConfig, {
   },
   plugins: [
 
+    new webpack.DefinePlugin({
+      'process.env': config.dev.env,
+    }),
     // Plugins that apply in development builds only
     new webpack.SourceMapDevToolPlugin({
       // Remove this line if you prefer inline source maps
@@ -51,6 +52,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       serviceWorkerLoader: `<script>${loadMinified(path.join(__dirname,
         './service-worker-prod.js'))}</script>`,
     }),
+    new FriendlyErrorsPlugin(),
   ],
 })
 
